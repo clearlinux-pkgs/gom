@@ -4,7 +4,7 @@
 #
 Name     : gom
 Version  : 0.3.3
-Release  : 3
+Release  : 4
 URL      : https://download.gnome.org/sources/gom/0.3/gom-0.3.3.tar.xz
 Source0  : https://download.gnome.org/sources/gom/0.3/gom-0.3.3.tar.xz
 Summary  : No detailed summary available
@@ -13,13 +13,12 @@ License  : LGPL-2.1
 Requires: gom-data
 Requires: gom-lib
 Requires: gom-python
-BuildRequires : glibc-bin
+Requires: gom-license
 BuildRequires : gobject-introspection
 BuildRequires : gobject-introspection-dev
 BuildRequires : meson
 BuildRequires : ninja
 BuildRequires : pkgconfig(gdk-pixbuf-2.0)
-BuildRequires : pkgconfig(gio-2.0)
 BuildRequires : pkgconfig(sqlite3)
 BuildRequires : pygobject-python
 BuildRequires : python3
@@ -52,9 +51,18 @@ dev components for the gom package.
 Summary: lib components for the gom package.
 Group: Libraries
 Requires: gom-data
+Requires: gom-license
 
 %description lib
 lib components for the gom package.
+
+
+%package license
+Summary: license components for the gom package.
+Group: Default
+
+%description license
+license components for the gom package.
 
 
 %package python
@@ -73,11 +81,13 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1518724399
-CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain  builddir
+export SOURCE_DATE_EPOCH=1531337227
+CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain   builddir
 ninja -v -C builddir
 
 %install
+mkdir -p %{buildroot}/usr/share/doc/gom
+cp COPYING %{buildroot}/usr/share/doc/gom/COPYING
 DESTDIR=%{buildroot} ninja -C builddir install
 
 %files
@@ -109,6 +119,10 @@ DESTDIR=%{buildroot} ninja -C builddir install
 %defattr(-,root,root,-)
 /usr/lib64/libgom-1.0.so.0
 /usr/lib64/libgom-1.0.so.0.1.0
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/gom/COPYING
 
 %files python
 %defattr(-,root,root,-)
