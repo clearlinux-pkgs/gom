@@ -4,7 +4,7 @@
 #
 Name     : gom
 Version  : 0.3.3
-Release  : 4
+Release  : 5
 URL      : https://download.gnome.org/sources/gom/0.3/gom-0.3.3.tar.xz
 Source0  : https://download.gnome.org/sources/gom/0.3/gom-0.3.3.tar.xz
 Summary  : No detailed summary available
