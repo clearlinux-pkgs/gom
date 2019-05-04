@@ -4,24 +4,23 @@
 #
 Name     : gom
 Version  : 0.3.3
-Release  : 5
+Release  : 6
 URL      : https://download.gnome.org/sources/gom/0.3/gom-0.3.3.tar.xz
 Source0  : https://download.gnome.org/sources/gom/0.3/gom-0.3.3.tar.xz
-Summary  : No detailed summary available
+Summary  : A GObject to SQLite object mapper
 Group    : Development/Tools
 License  : LGPL-2.1
-Requires: gom-data
-Requires: gom-lib
-Requires: gom-python
-Requires: gom-license
+Requires: gom-data = %{version}-%{release}
+Requires: gom-lib = %{version}-%{release}
+Requires: gom-license = %{version}-%{release}
+Requires: gom-python = %{version}-%{release}
+BuildRequires : buildreq-gnome
+BuildRequires : buildreq-meson
 BuildRequires : gobject-introspection
 BuildRequires : gobject-introspection-dev
-BuildRequires : meson
-BuildRequires : ninja
-BuildRequires : pkgconfig(gdk-pixbuf-2.0)
 BuildRequires : pkgconfig(sqlite3)
 BuildRequires : pygobject-python
-BuildRequires : python3
+BuildRequires : sqlite-autoconf-dev
 
 %description
 ---------------------------------------------------------------------------
@@ -39,9 +38,10 @@ data components for the gom package.
 %package dev
 Summary: dev components for the gom package.
 Group: Development
-Requires: gom-lib
-Requires: gom-data
-Provides: gom-devel
+Requires: gom-lib = %{version}-%{release}
+Requires: gom-data = %{version}-%{release}
+Provides: gom-devel = %{version}-%{release}
+Requires: gom = %{version}-%{release}
 
 %description dev
 dev components for the gom package.
@@ -50,8 +50,8 @@ dev components for the gom package.
 %package lib
 Summary: lib components for the gom package.
 Group: Libraries
-Requires: gom-data
-Requires: gom-license
+Requires: gom-data = %{version}-%{release}
+Requires: gom-license = %{version}-%{release}
 
 %description lib
 lib components for the gom package.
@@ -81,13 +81,20 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1531337227
+export SOURCE_DATE_EPOCH=1557008280
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain   builddir
 ninja -v -C builddir
 
 %install
-mkdir -p %{buildroot}/usr/share/doc/gom
-cp COPYING %{buildroot}/usr/share/doc/gom/COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/gom
+cp COPYING %{buildroot}/usr/share/package-licenses/gom/COPYING
 DESTDIR=%{buildroot} ninja -C builddir install
 
 %files
@@ -121,8 +128,8 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/lib64/libgom-1.0.so.0.1.0
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/gom/COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/gom/COPYING
 
 %files python
 %defattr(-,root,root,-)
