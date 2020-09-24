@@ -4,7 +4,7 @@
 #
 Name     : gom
 Version  : 0.4
-Release  : 8
+Release  : 9
 URL      : https://download.gnome.org/sources/gom/0.4/gom-0.4.tar.xz
 Source0  : https://download.gnome.org/sources/gom/0.4/gom-0.4.tar.xz
 Summary  : No detailed summary available
